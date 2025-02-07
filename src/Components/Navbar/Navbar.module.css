@@ -1,0 +1,23 @@
+.Container{
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    background-color: #091428;
+    border-bottom: 3px double #9FBFD0;
+    height: 100px;
+}
+
+.Bar{
+    display: flex;
+    justify-content: space-between;
+    max-width: 1520px;
+    width: 90%;
+    border: 1px solid #9FBFD0;
+    color: #9FBFD0;
+    height: 60px;
+    align-items: center;
+    margin: 10px 10px;
+    padding-left: 60px;
+    padding-right: 10px;
+}
+

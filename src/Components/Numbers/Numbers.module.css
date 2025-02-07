@@ -1,0 +1,23 @@
+.Container{
+    border-bottom: 3px double #9FBFD0;
+    overflow: scroll;
+}
+.Container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+table {
+    color: #9FBFD0;
+    border: none;
+    line-height: 50px;
+}
+
+.Field{
+    height: 70vh;
+}
+
+.Number{
+    margin: 20px;
+    padding-top: 5px;
+    font-size: 24px;
+}
