@@ -1,7 +1,11 @@
 .Container{
     border-top: 1px solid #9FBFD0;
-    height: 60px;
+    height: 20px;
     text-align: center;
+    user-select: none;  
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;  /* Internet Explorer/Edge */
 
 }
 

@@ -1,7 +1,12 @@
 .Container{
-    user-select: none;  
+    
     border-bottom: 3px double #9FBFD0;
     overflow: scroll;
+    cursor: crosshair;
+    user-select: none;  
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;  /* Internet Explorer/Edge */
 }
 .Container::-webkit-scrollbar {
     display: none; /* Chrome, Safari */
@@ -10,7 +15,9 @@
 table {
     color: #9FBFD0;
     border: none;
-    line-height: 50px;
+    line-height: 35px;
+    user-select: none;  
+
 }
 
 .Field{
@@ -18,8 +25,10 @@ table {
 }
 
 .Number{
+    user-select: none;  
     margin: 20px;
-    padding-top: 5px;
+    padding-top: 0px;
     font-size: 24px;
     background-color: transparent;
 }
+

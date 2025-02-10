@@ -5,6 +5,10 @@
     background-color: #091428;
     border-bottom: 3px double #9FBFD0;
     height: 100px;
+    user-select: none;  
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;  /* Internet Explorer/Edge */
 }
 
 .Bar{
