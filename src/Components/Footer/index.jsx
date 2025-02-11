@@ -1,13 +1,18 @@
-import styles from './Footer.module.css'
+import styles from "./Footer.module.css";
 
-const Footer = () => {
-
-    return(
-
+const Footer = ({ mousePosition, activeBox }) => { 
+    return (
         <div className={styles.Container}>
-            <h4> 0x000000000 : 0x00000000</h4>
+            <h4>Mouse Position: X: {mousePosition.x}, Y: {mousePosition.y}</h4>
+            {activeBox ? (
+                <h4>
+                    Box {activeBox.boxNumber} is Open | Position: X {activeBox.position.x}, Y {activeBox.position.y}
+                </h4>
+            ) : (
+                <h4>No Box Open</h4>
+            )}
         </div>
-    )
-}
+    );
+};
 
-export default Footer
+export default Footer;
