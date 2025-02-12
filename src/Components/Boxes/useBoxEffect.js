@@ -6,7 +6,6 @@ const useBoxEffect = () => {
 
     useEffect(() => {
         const handleKeyDown = (event) => {
-            console.log("Key pressed:", event.key); // 🔍 Debugging
 
             if (event.key >= "1" && event.key <= "5") {
                 const boxNumber = parseInt(event.key);

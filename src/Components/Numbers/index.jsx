@@ -14,21 +14,20 @@ const generateNumbers = () =>
     );
 
 const Numbers = ({ setMousePosition, activeBox }) => {
+    const gridSize = { rows, columns };
     const [numbersGrid, setNumbersGrid] = useState(generateNumbers());
-    const positions = useRandomPositions(rows, columns);
     const containerRef = useRef(null);
     const cellSize = useCellSize(containerRef, rows, columns);
     const { position, relativePosition } = useMousePosition(containerRef, setMousePosition);
-
     return (
         <div ref={containerRef} className={styles.Container}>
             <div className={styles.Field}>
                 <NumbersGrid 
                     numbersGrid={numbersGrid} 
-                    positions={positions} 
                     mousePosition={relativePosition}
                     cellSize={cellSize} 
                     activeBox={activeBox}
+                    gridSize= {gridSize}
                 />
             </div>
         </div>

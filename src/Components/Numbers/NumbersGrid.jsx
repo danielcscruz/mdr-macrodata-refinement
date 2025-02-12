@@ -1,11 +1,31 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import NumberCell from "./NumberCell";
 import styles from "./Numbers.module.css";
+import useClick from "./useClick";
 
 
-const NumbersGrid = ({ numbersGrid, positions, mousePosition, cellSize, activeBox }) => {
 
-    
+const NumbersGrid = ({ numbersGrid, mousePosition, cellSize, activeBox, gridSize}) => {
+
+    const [selectedCells, setSelectedCells] = useState(null);
+    const [finalPosition, setFinalPosition] = useState(null);
+    const [animatingCells, setAnimatingCells] = useState({});
+
+
+    // Handler for when a cell is clicked
+    const handleCellClick = (row, col) => {
+        // Call useClick (which now returns an object) for the clicked cell
+        const result = useClick(row, col, activeBox, numbersGrid);
+
+        if (result) {
+            setSelectedCells(result.selectedCells);
+            setFinalPosition(result.finalPosition);
+            console.log("Selected Cells:", result.selectedCells);
+            console.log("Final Position:", result.finalPosition);
+        }
+    };
+
+
     return (
         <table className={styles.Grid} >
             <tbody>
@@ -17,10 +37,14 @@ const NumbersGrid = ({ numbersGrid, positions, mousePosition, cellSize, activeBo
                                     number={number}
                                     rowIndex={rowIndex}
                                     colIndex={colIndex}
-                                    position={positions[rowIndex][colIndex]}
                                     mousePosition={mousePosition}
                                     cellSize={cellSize}
                                     activeBox={activeBox}
+                                    numbersGrid = {numbersGrid}
+                                    gridSize = {gridSize}
+                                    onCellClick={() => handleCellClick(rowIndex, colIndex)}
+                                    selectedCells={selectedCells}
+                                    finalPosition={finalPosition}
                                 />
                             </td>
                         ))}
