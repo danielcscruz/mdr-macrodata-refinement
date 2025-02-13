@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 
 const useMousePosition = (containerRef, updatePosition) => {
-    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [absolutePosition, setAbsolutePosition] = useState({ x: 0, y: 0 });
     const [relativePosition, setRelativePosition] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
         const handleMouseMove = (event) => {
             const { clientX, clientY } = event;
-            setPosition({ x: clientX, y: clientY });
+            setAbsolutePosition({ x: clientX, y: clientY });
 
             if (containerRef?.current) {
                 const container = containerRef.current;
@@ -32,7 +32,7 @@ const useMousePosition = (containerRef, updatePosition) => {
         return () => window.removeEventListener("mousemove", handleMouseMove);
     }, [containerRef, updatePosition]);
 
-    return { position, relativePosition };
+    return { absolutePosition, relativePosition };
 };
 
 export default useMousePosition;

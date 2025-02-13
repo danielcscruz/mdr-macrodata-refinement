@@ -1,30 +1,29 @@
 import { useState, useEffect } from "react";
 
 const useCellSize = (containerRef, rows, columns) => {
-    const [cellSize, setCellSize] = useState({ width: 50, height: 50 }); // Default size
+    const [cellSize, setCellSize] = useState({ width: 45, height: 47 }); // Default size
 
     useEffect(() => {
+        if (!containerRef.current) return;
+
         const updateCellSize = () => {
-            if (containerRef.current) {
-                const container = containerRef.current;
-                
-                // Use scrollWidth & scrollHeight for full content size
-                const fullWidth = container.scrollWidth;
-                const fullHeight = container.scrollHeight;
-                
-                setCellSize({
-                    width: fullWidth / columns,
-                    height: fullHeight / rows
-                });
-            }
+            const container = containerRef.current;
+            const { width, height } = container.getBoundingClientRect(); // Get exact container size
+
+            setCellSize({
+                width: width / columns,
+                height: height / rows
+            });
         };
 
-        updateCellSize(); // Set initial size
-        window.addEventListener("resize", updateCellSize);
+        const resizeObserver = new ResizeObserver(updateCellSize);
+        resizeObserver.observe(containerRef.current);
 
-        return () => window.removeEventListener("resize", updateCellSize);
+        updateCellSize(); // Initial update
+
+        return () => resizeObserver.disconnect();
     }, [containerRef, rows, columns]);
-
+    console.log(cellSize);
     return cellSize;
 };
 

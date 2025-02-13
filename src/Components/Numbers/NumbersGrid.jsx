@@ -1,53 +1,56 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import NumberCell from "./NumberCell";
 import styles from "./Numbers.module.css";
 import useClick from "./useClick";
+import updateGrid from "./updateGrid";
+import useScale from "./useScale";  // Import the hook
 
-
-
-const NumbersGrid = ({ numbersGrid, mousePosition, cellSize, activeBox, gridSize}) => {
-
+const NumbersGrid = ({ numbersGrid, setNumbersGrid, activeBox, gridSize }) => {
     const [selectedCells, setSelectedCells] = useState(null);
     const [finalPosition, setFinalPosition] = useState(null);
-    const [animatingCells, setAnimatingCells] = useState({});
+
+    const [hoveredCell, setHoveredCell] = useState({row:0, col:0}); // New state
 
 
-    // Handler for when a cell is clicked
+    useEffect(() => {
+        console.log("Updated numbersGrid:", numbersGrid);
+    }, [numbersGrid]);
+
     const handleCellClick = (row, col) => {
-        // Call useClick (which now returns an object) for the clicked cell
         const result = useClick(row, col, activeBox, numbersGrid);
 
         if (result) {
             setSelectedCells(result.selectedCells);
             setFinalPosition(result.finalPosition);
-            console.log("Selected Cells:", result.selectedCells);
-            console.log("Final Position:", result.finalPosition);
+            setNumbersGrid((numbersGrid) => updateGrid(numbersGrid, result.selectedCells));
         }
     };
 
-
     return (
-        <table className={styles.Grid} >
+        <table className={styles.Grid}>
             <tbody>
                 {numbersGrid.map((row, rowIndex) => (
                     <tr key={rowIndex}>
-                        {row.map((number, colIndex) => (
-                            <td key={colIndex}>
-                                <NumberCell 
-                                    number={number}
-                                    rowIndex={rowIndex}
-                                    colIndex={colIndex}
-                                    mousePosition={mousePosition}
-                                    cellSize={cellSize}
-                                    activeBox={activeBox}
-                                    numbersGrid = {numbersGrid}
-                                    gridSize = {gridSize}
-                                    onCellClick={() => handleCellClick(rowIndex, colIndex)}
-                                    selectedCells={selectedCells}
-                                    finalPosition={finalPosition}
-                                />
-                            </td>
-                        ))}
+                        {row.map((number, colIndex) => {
+                            const scale = useScale(rowIndex, colIndex, hoveredCell); // Pass hoveredCell info correctly
+
+                            return (
+                                <td key={colIndex}>
+                                    <NumberCell
+                                        number={number}
+                                        rowIndex={rowIndex}
+                                        colIndex={colIndex}
+                                        gridSize={gridSize}
+                                        scale={scale} // Pass the scale to NumberCell
+                                        onCellClick={() => handleCellClick(rowIndex, colIndex)}
+                                        selectedCells={selectedCells}
+                                        finalPosition={finalPosition}
+                                        setHoveredCell={setHoveredCell} // Pass function to update hover
+
+                                    />
+                                </td>
+                            );
+                        })}
                     </tr>
                 ))}
             </tbody>

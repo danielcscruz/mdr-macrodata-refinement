@@ -1,21 +1,21 @@
 import { useMemo } from "react";
 
-const MAX_SCALE = 4.0;
-const MIN_SCALE = 1.1;
-const HOVER_RADIUS = 120;
+const MAX_SCALE = 2.5;
+const MIN_SCALE = 1;
+const HOVER_RADIUS = 2;
 
-const useScale = (row, col, mousePosition, cellSize) => {
+const useScale = (row, col, hoveredCell) => {
     return useMemo(() => {
-        if (!mousePosition) return MIN_SCALE;
-        const x = col * cellSize.width + cellSize.width / 2;
-        const y = row * cellSize.height + cellSize.height / 2;
-        const dx = x - mousePosition.x;
-        const dy = y - mousePosition.y;
+        if (!hoveredCell) return MIN_SCALE;
+
+        const dx = row - hoveredCell.row;
+        const dy = col - hoveredCell.col;
         const distance = Math.sqrt(dx * dx + dy * dy);
+
         if (distance > HOVER_RADIUS) return MIN_SCALE;
 
         return MIN_SCALE + (MAX_SCALE - MIN_SCALE) * (1 - distance / HOVER_RADIUS);
-    }, [row, col, mousePosition, cellSize]);
+    }, [row, col, hoveredCell]);
 };
 
 export default useScale;
