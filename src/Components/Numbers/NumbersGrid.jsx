@@ -4,13 +4,16 @@ import styles from "./Numbers.module.css";
 import useClick from "./useClick";
 import updateGrid from "./updateGrid";
 import useScale from "./useScale";  // Import the hook
+import useRefine from "../Refine/useRefine"; // Import refine hook
 
-const NumbersGrid = ({ numbersGrid, setNumbersGrid, activeBox, gridSize }) => {
-    const [selectedCells, setSelectedCells] = useState(null);
+const NumbersGrid = ({ numbersGrid, setNumbersGrid, activeBox, gridSize, setSelectedCells, selectedCells }) => {
+    // const [selectedCells, setSelectedCells] = useState(null);
     const parentRef = useRef(null);
     const [finalPosition, setFinalPosition] = useState({ x: 0, y: 0 });
 
     const [hoveredCell, setHoveredCell] = useState({row:0, col:0}); // New state
+    const { updateProgress } = useRefine(); // Get function to update progress
+
 
     const calculateFinalPosition = (activeBox, parentRef) => {
         if (!activeBox || !parentRef?.current) return { x: 0, y: 0 };
@@ -28,7 +31,6 @@ const NumbersGrid = ({ numbersGrid, setNumbersGrid, activeBox, gridSize }) => {
 
     useEffect(() => {
         setFinalPosition(calculateFinalPosition(activeBox, parentRef));
-        console.log("from Grid: ",finalPosition)
     }, [activeBox]);
 
     useEffect(() => {
@@ -41,6 +43,9 @@ const NumbersGrid = ({ numbersGrid, setNumbersGrid, activeBox, gridSize }) => {
         if (result) {
             setSelectedCells(result.selectedCells);
             setFinalPosition(result.finalPosition);
+            // Update the progress bar based on the selected numbers
+            // updateProgress(activeBox, result.selectedCells);
+
             setTimeout(() => {
                 setNumbersGrid((numbersGrid) => updateGrid(numbersGrid, result.selectedCells));
             }, 1000); 

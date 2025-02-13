@@ -12,6 +12,10 @@ function App() {
     const [numbersGrid, setNumbersGrid] = useState([]);
     const containerRef = useRef(null);
     const activeBox = useBoxEffect();
+    const [selectedCells, setSelectedCells] = useState(null); // ✅ Move state up
+    const [progressValues, setProgressValues] = useState(Array(5).fill(0)); // 🔹 Lift state up
+
+
 
     return (
         <div ref={containerRef}>
@@ -21,13 +25,17 @@ function App() {
                 containerRef={containerRef} 
                 cellSize={{ width: 50, height: 50 }} 
             />
-            <Navbar />
+            <Navbar progressValues={progressValues}/>
             <Numbers 
                 setMousePosition={setMousePosition} 
                 numbersGrid={numbersGrid}
                 activeBox={activeBox}
+                setSelectedCells={setSelectedCells}
+                selectedCells={selectedCells}
             />
-            <Boxes />
+            <Boxes selectedCells={selectedCells} 
+            progressValues={progressValues} 
+            setProgressValues={setProgressValues} /> 
             <Footer mousePosition={mousePosition} activeBox={activeBox} />
         </div>
     );

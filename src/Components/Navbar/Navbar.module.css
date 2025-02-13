@@ -23,5 +23,19 @@
     margin: 10px 10px;
     padding-left: 60px;
     padding-right: 10px;
+     
+}
+@media (max-width: 500px){
+
+    .Bar{
+        max-width: 400px;
+        width: 90%;
+        padding-right: 40px;
+
+    }
+
+    h1{
+        display: none;
+    }
 }
 

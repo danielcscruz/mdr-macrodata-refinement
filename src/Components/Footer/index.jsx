@@ -3,14 +3,8 @@ import styles from "./Footer.module.css";
 const Footer = ({ mousePosition, activeBox }) => { 
     return (
         <div className={styles.Container}>
-            <h4>Mouse Position: X: {mousePosition.x}, Y: {mousePosition.y}</h4>
-            {activeBox ? (
-                <h4>
-                    Box {activeBox.boxNumber} is Open | Position: X {activeBox.position.x}, Y {activeBox.position.y}
-                </h4>
-            ) : (
-                <h4>No Box Open</h4>
-            )}
+            <h4> 00:000000000 x 00:000000000</h4>
+            
         </div>
     );
 };

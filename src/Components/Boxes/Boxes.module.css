@@ -4,10 +4,10 @@
     display: flex; 
     max-width: 1500px;
     width: 100%;
-    margin: 5px auto;
+    margin: 0 auto;
     justify-content: space-between;
-    padding-top: 10px;
-    padding-bottom: 30px;
+    padding-top: 5px;
+    padding-bottom: 20px;
     user-select: none;  
     -webkit-user-select: none; /* Safari */
     -moz-user-select: none;    /* Firefox */
@@ -18,6 +18,7 @@
     width: 200px;
     display: block;
     margin: 0 30px;
+    
 }
 
 .Box{
@@ -25,15 +26,44 @@
     display: block;
     text-align: center; 
     margin-bottom: 10px;   
+    height: 60px;
 }
 
-.Bar{
+
+
+
+.Bar {
+    position: relative; 
+    width: 100%;
+    height: 20px;
+    background-color: transparent; /* Background color */
     border: 1px solid #9FBFD0;
-    display: flex;
-    height: 25px;
-    align-items: center;
+    overflow: hidden;
 }
 
-h4{
+.Fill {
+    height: 100%;
+    background-color: #9FBFD0; /* Progress color */
+    width: 0%; /* Start empty */
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: width 0.5s ease-in-out; /* Smooth animation */
+}
+
+.ProgressText {
+    margin-top: 0;
+    position: absolute;
     background-color: transparent;
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    font-weight: bold;
+    color: #9FBFD0; /* Text color */
+    text-align: start;
+    z-index: 10; /* Higher than `.Fill` */
+    pointer-events: none;
+    mix-blend-mode: difference;
+    
 }

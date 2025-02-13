@@ -8,7 +8,7 @@ import useInitialGrid from "./useInitialGrid";
 const rows = 15;
 const columns = 30;
 
-const Numbers = ({ setMousePosition, activeBox }) => {
+const Numbers = ({ setMousePosition, activeBox, setSelectedCells, selectedCells }) => {
     const gridSize = { rows, columns };
 
     const [numbersGrid, setNumbersGrid] = useState(null); // Start as null
@@ -46,6 +46,8 @@ const Numbers = ({ setMousePosition, activeBox }) => {
                     activeBox={activeBox}
                     gridSize={gridSize}
                     setNumbersGrid={setNumbersGrid}
+                    setSelectedCells={setSelectedCells}
+                    selectedCells={selectedCells}
                 />
             </div>
         </div>
