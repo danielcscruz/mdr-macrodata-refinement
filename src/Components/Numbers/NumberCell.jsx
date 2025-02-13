@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import styles from "./Numbers.module.css";
 import useRandomPositions from "./useRandomPositions";
@@ -19,6 +19,8 @@ const NumberCell = ({
     const [isFadingIn, setIsFadingIn] = useState(true);
     const randomPositions = useRandomPositions(gridSize.rows, gridSize.columns);
     const pos = randomPositions[rowIndex]?.[colIndex] || { x: 0, y: 0 };
+
+    const cellRef = useRef(null);
 
     // Ensure currentNumber updates when number changes
     useEffect(() => {
@@ -44,13 +46,24 @@ const NumberCell = ({
         }
     }, [selectedCells, rowIndex, colIndex]);
 
+    // Calculate relative position for animation compensation
+    let relativeFinalPosition = { x: 0, y: 0 };
+    if (finalPosition && cellRef.current) {
+        const cellRect = cellRef.current.getBoundingClientRect();
+        relativeFinalPosition = {
+            x: finalPosition.x - cellRect.left,
+            y: finalPosition.y - cellRect.top,
+        };
+    }
+
     // Animation properties
     const animateProps = isAnimating
-        ? { x: finalPosition?.x || 0, y: finalPosition?.y || 0, scale: 0, opacity: 0 }
+        ? { x: relativeFinalPosition.x, y: relativeFinalPosition.y, scale: 0, opacity: 0 }
         : { x: pos.x, y: pos.y, scale, opacity: isFadingIn ? 1 : 0 }; // Now using the scale prop
 
     return (
         <motion.h3
+            ref={cellRef}
             className={styles.Number}
             onClick={onCellClick}  
             onMouseEnter={() => setHoveredCell({ row: rowIndex, col: colIndex })} // Updates when mouse enters

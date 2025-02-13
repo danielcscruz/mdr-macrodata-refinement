@@ -28,9 +28,7 @@ const useClick = (row, col, activeBox, numbersGrid) => {
         if (activeBox) {
 
             const selectedCells = selectedNumbers(row, col, numbersGrid);
-            const finalPosition = { x: activeBox.position.x, y: activeBox.position.y };
-            console.log(selectedCells)
-            
+            const finalPosition = { x: activeBox.position.x, y: activeBox.position.y };            
             return { selectedCells, finalPosition };
             
         }else{

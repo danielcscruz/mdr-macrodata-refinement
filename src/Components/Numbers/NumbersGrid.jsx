@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import NumberCell from "./NumberCell";
 import styles from "./Numbers.module.css";
 import useClick from "./useClick";
@@ -7,13 +7,32 @@ import useScale from "./useScale";  // Import the hook
 
 const NumbersGrid = ({ numbersGrid, setNumbersGrid, activeBox, gridSize }) => {
     const [selectedCells, setSelectedCells] = useState(null);
-    const [finalPosition, setFinalPosition] = useState(null);
+    const parentRef = useRef(null);
+    const [finalPosition, setFinalPosition] = useState({ x: 0, y: 0 });
 
     const [hoveredCell, setHoveredCell] = useState({row:0, col:0}); // New state
 
+    const calculateFinalPosition = (activeBox, parentRef) => {
+        if (!activeBox || !parentRef?.current) return { x: 0, y: 0 };
+    
+        const LEFT_MARGIN = 95; // Adjust as needed
+        const BOX_SPACING = 190; // Adjust based on the grid layout
+        const parentHeight = parentRef.current.clientHeight;
+        
+    
+        return {
+            x: LEFT_MARGIN + activeBox.boxNumber * (BOX_SPACING-1),
+            y: parentHeight,
+        };
+    };
 
     useEffect(() => {
-        console.log("Updated numbersGrid:", numbersGrid);
+        setFinalPosition(calculateFinalPosition(activeBox, parentRef));
+        console.log("from Grid: ",finalPosition)
+    }, [activeBox]);
+
+    useEffect(() => {
+
     }, [numbersGrid]);
 
     const handleCellClick = (row, col) => {
@@ -22,7 +41,9 @@ const NumbersGrid = ({ numbersGrid, setNumbersGrid, activeBox, gridSize }) => {
         if (result) {
             setSelectedCells(result.selectedCells);
             setFinalPosition(result.finalPosition);
-            setNumbersGrid((numbersGrid) => updateGrid(numbersGrid, result.selectedCells));
+            setTimeout(() => {
+                setNumbersGrid((numbersGrid) => updateGrid(numbersGrid, result.selectedCells));
+            }, 1000); 
         }
     };
 

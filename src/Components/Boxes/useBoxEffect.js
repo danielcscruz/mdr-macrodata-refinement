@@ -24,7 +24,10 @@ const useBoxEffect = () => {
                 setActiveBox({
                     isOpen: true,
                     boxNumber,
-                    position: { x: rect.left, y: rect.top },
+                    position: { 
+                        x: Math.floor(rect.left + rect.width / 2), 
+                        y: Math.floor(rect.top) 
+                    },
                 });
 
                 // Set a new timeout and store its ID

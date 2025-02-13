@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 
-const MAX_SCALE = 2.5;
+const MAX_SCALE = 3;
 const MIN_SCALE = 1;
-const HOVER_RADIUS = 2;
+const HOVER_RADIUS = 2.5;
 
 const useScale = (row, col, hoveredCell) => {
     return useMemo(() => {
